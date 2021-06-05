@@ -20,6 +20,10 @@ app.get("/", (req, res) => {
   res.send("Index");
 });
 
+// Gig routes
+
+app.use("/gigs", require("./routes/gigs"));
+
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
