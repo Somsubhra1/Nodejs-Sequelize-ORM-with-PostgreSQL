@@ -1,5 +1,7 @@
 const router = require("express").Router();
 const db = require("../config/database");
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const Gig = require("../models/Gig");
 
@@ -73,6 +75,19 @@ router.post("/add", async (req, res) => {
 
     // Insert into table
   } catch (error) {}
+});
+
+router.get("/search", async (req, res) => {
+  let { term } = req.query;
+
+  term = term.toLowerCase();
+
+  const gigs = await Gig.findAll({
+    where: { technologies: { [Op.like]: `%${term}%` } },
+    raw: true,
+  });
+
+  res.render("gigs", { gigs });
 });
 
 module.exports = router;
