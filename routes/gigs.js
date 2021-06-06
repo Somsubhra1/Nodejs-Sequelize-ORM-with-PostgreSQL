@@ -7,16 +7,22 @@ const Gig = require("../models/Gig");
 router.get("/", async (req, res) => {
   try {
     //   Get all data from a table
-    const gigs = await Gig.findAll();
+    // raw: true is needed to pass just the raw data to template
+    const gigs = await Gig.findAll({ raw: true });
     console.log(gigs);
-    res.sendStatus(200);
+    res.render("gigs", { gigs });
   } catch (error) {
     console.log(error);
   }
 });
 
+// Display add gig form
+router.get("/add", (req, res) => {
+  res.render("add");
+});
+
 // Add a gig
-router.get("/add", async (req, res) => {
+router.post("/add", async (req, res) => {
   try {
     const data = {
       title: "Simple WP Website",
