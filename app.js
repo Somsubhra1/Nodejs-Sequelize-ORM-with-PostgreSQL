@@ -22,6 +22,9 @@ app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 
 app.set("view engine", "handlebars");
 
+// Body parser
+app.use(express.urlencoded({ extended: false }));
+
 // Set static
 app.use(express.static(path.join(__dirname, "public")));
 
